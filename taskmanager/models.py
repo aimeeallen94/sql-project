@@ -1,14 +1,15 @@
 from taskmanager import db
 
+
 class Category(db.Model):
     # schema for the Category model
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(25), unique=True, nullable=False)
-    task = db.relationship("Task", backref="category", cascade="all, delete", lazy=True)
+    tasks = db.relationship("Task", backref="category", cascade="all, delete", lazy=True)
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
-        return self
+        return self.category_name
 
 
 class Task(db.Model):
@@ -22,5 +23,6 @@ class Task(db.Model):
 
     def __repr__(self):
         # __repr__ to represent itself in the form of a string
-        return "#{0} - Task: {1} | Urgent: {2}".format(self.id, self.task_name, self.is_urgent)
-
+        return "#{0} - Task: {1} | Urgent: {2}".format(
+            self.id, self.task_name, self.is_urgent
+        )
